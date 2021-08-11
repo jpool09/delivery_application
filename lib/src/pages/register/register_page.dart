@@ -21,15 +21,14 @@ class _RegisterPageState extends State<RegisterPage> {
 
     //Siempre inicializar los controllers acá
     SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
-      _con.init(context);
+      _con.init(context, refresh);
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Container(
+      body: Container(
           width: double.infinity,
           child: Stack(
             children: [
@@ -46,7 +45,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      _lottieUser(),
+                      _imageUser(),
                       _textFieldEmail(),
                       _textFieldName(),
                       _textFieldLastName(),
@@ -61,7 +60,6 @@ class _RegisterPageState extends State<RegisterPage> {
             ],
           ),
         ),
-      ),
     );
   }
 
@@ -251,10 +249,19 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   Widget _imageUser() {
-    return CircleAvatar(
-      backgroundImage: AssetImage('assets/img/user_profile_2.png'),
-      radius: 60,
-      backgroundColor: Colors.grey[200],
+    return GestureDetector(
+      onTap: _con.showAlertDialog,
+      child: CircleAvatar(
+        backgroundImage: _con.imageFile != null
+            ? FileImage(_con.imageFile)
+            : AssetImage('assets/img/user_profile_2.png'),
+        radius: 60,
+        backgroundColor: Colors.grey[200],
+      ),
     );
+  }
+
+  void refresh() {
+    setState(() {});
   }
 }
